@@ -1,0 +1,124 @@
+<%- include('./partials/head') %>
+<script src="https://cdn.tiny.cloud/1/s5b8jmmq6w03xfpbxoe6eophnsimtz9igqk61qsmgq2d2l97/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<% if (locals.title) { %>
+    <title><%= title %> || Blog</title>
+<% }else{ %>
+    <title>Tutorial || Blog</title>
+<% } %>
+<%- include('./partials/navbar') %> 
+
+<div class="container">
+    
+    <% if(locals.title){ %> 
+        <h1 class="text-center"><%= title %> </h1>
+    <% }else{ %> 
+        <h1 class="text-center">Punjer Coding</h1>
+    <% } %> 
+    
+<!-- Flash message -->
+    <% infoFlash.forEach(info => { %>
+        <div class="alert alert-success" role="alert">
+            <%= info %> 
+        </div>
+    <% }) %>
+    <% errFlash.forEach(err => { %>
+        <div class="alert alert-danger" role="alert">
+            <%= err %> 
+        </div>
+    <% }) %>
+    
+    <% if (locals.post) { %>
+        <form action="/update-post" method="post" enctype="multipart/form-data">
+            <input type="text" hidden name="postId" value="<%= post.id %> ">
+            <div class="mb-3">
+                <label for="title" class="form-label">Judul Post</label>
+                <input type="text" class="form-control" id="title" name="title" value="<%= post.title %> ">
+            </div>
+            <div class="mb-3">
+                <label for="desc" class="form-label">Deskripsi Singkat Post</label>
+                <input type="text" class="form-control" id="desc" name="desc" value="<%= post.desc %> ">
+            </div>
+            <% if(post.image){ %> 
+                <div class="mb-3">
+                    <label class="form-label" for="img">Gambar</label>
+                    <input class="form-control" type="file" id="img" name="img" onchange="readURL(this)" value="<%= post.image %>">
+                </div>
+
+                <div class="mb-3">
+                    <img src="<%= post.image %> " alt="Gambar" style="display: block;" width="300px" id="display-img">
+                </div>
+            <% } else{ %>
+                <div class="mb-3">
+                    <label class="form-label" for="img">Gambar</label>
+                    <input class="form-control" type="file" id="img" name="img" onchange="readURL(this)">
+                </div>
+
+                <div class="mb-3">
+                    <img src="" alt="Gambar" style="display: none;" width="300px" id="display-img">
+                </div>
+            <% } %>  
+
+            <div class="mb-3">
+                <label for="isi-post" class="form-label">Isi Post</label>
+                <textarea name="isiPost" id="isi-post" cols="30" rows="10"><%= post.body %> </textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="isi-post" class="form-label">Author</label>
+                <select class="form-select" aria-label="Default select example" name="author">
+                    <option value="" selected>Pilih Author</option>
+                    <% author.forEach(thor => { %>
+                        <% if(thor.id===post.authorId){%>
+                            <option value="<%=thor.id%> " selected><%= thor.username %> </option>    
+                        <% }else{ %>  
+                            <option value="<%=thor.id%> "><%= thor.username %> </option>
+                        <% } %> 
+                    <% }) %>
+                </select>
+            </div>
+
+            <button class="btn btn-success" type="submit">Submit</button>
+        </form>
+    <% }else {%>
+        <form action="/insert-post" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="title" class="form-label">Judul Post</label>
+                <input type="text" class="form-control" id="title" name="title">
+            </div>
+
+            <div class="mb-3">
+                <label for="desc" class="form-label">Deskripsi Singkat Post</label>
+                <input type="text" class="form-control" id="desc" name="desc">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="img">Gambar</label>
+                <input class="form-control" type="file" id="img" name="img" onchange="readURL(this)">
+            </div>
+
+            <div class="mb-3">
+                <img src="" alt="" style="display: none;" width="300px" id="display-img">
+            </div>
+
+            <div class="mb-3">
+                <label for="isi-post" class="form-label">Isi Post</label>
+                <textarea name="isiPost" id="isi-post" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="isi-post" class="form-label">Author</label>
+                <select class="form-select" aria-label="Default select example" name="author">
+                    <option value="" selected>Pilih Author</option>
+                    <% author.forEach(thor => { %>
+                        <option value="<%=thor.id%> "><%= thor.username %> </option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <button class="btn btn-success" type="submit">Submit</button>
+        </form>
+        <% } %> 
+</div>
+
+<script src="/js/tinyEditor.js"></script>
+<%- include('./partials/footer') %>

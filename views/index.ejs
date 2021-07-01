@@ -1,0 +1,12 @@
+        <%- include('./partials/head') %>
+        <% if (locals.title) { %>
+                <title><%= title %> || Blog</title>
+            <% }else{ %>
+                <title>Tutorial || Blog</title>
+            <% } %>
+        <%- include('./partials/navbar') %>
+
+        <h1 class="text-center">WELCOME</h1>
+        <h3 class="text-center">Punjer Coding Disini</h3>
+
+        <%- include('./partials/footer') %>        

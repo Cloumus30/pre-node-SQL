@@ -1,0 +1,55 @@
+<%- include('./partials/head') %> 
+<% if (locals.title) { %>
+    <title><%= title %> || Blog</title>
+<% }else{ %>
+    <title>Tutorial || Blog</title>
+<% } %>
+<%- include('./partials/navbar') %> 
+
+
+
+<div class="container pt-5">
+    <% if (locals.title) { %>
+        <h1 class="text-center"><%= title %> </h1>
+    <% } else{ %>
+        <h1 class="text-center">Punjer Coding</h1>
+    <% } %> 
+    <div class="text-end my-5">
+        <a href="/insert-post" class="btn btn-success mt-4">+ Tambah</a>
+    </div>
+    <!--  Flash message -->
+    <% infoFlash.forEach(info => { %>
+        <div class="alert alert-success" role="alert">
+            <%= info %> 
+        </div>
+    <% }) %>
+    <% errFlash.forEach(err => { %>
+        <div class="alert alert-danger" role="alert">
+            <%= err %> 
+        </div>
+    <% }) %>
+    
+        <div class="row justify-content-sm-center justify-content-md-start">
+            <% if (posts.length===0){ %> 
+                <div class="alert alert-primary" role="alert">
+                    Tidak Ada Pos
+                </div>
+            <% } %> 
+            <% posts.forEach(pst => { %>
+            <div class="col-md-3 col-sm-12 pb-5">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center pb-2"><%= pst.title %> By <a href="/author/<%= pst.author.id %> "><%= pst.author.name %> </a> </h5>
+                        <p class="card-text pb-2"><%- pst.desc %> </p>
+                        <a href="/post/<%= pst.id %> " class="btn btn-primary">Read</a>
+                        <a href="/delete-post/<%= pst.id %> " class="btn btn-danger">Delete</a>
+                        </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    
+    
+</div>
+
+<%- include('./partials/footer') %> 

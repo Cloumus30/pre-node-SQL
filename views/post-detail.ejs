@@ -1,0 +1,28 @@
+<%- include('./partials/head') %> 
+<% if (locals.title) { %>
+    <title><%= title %> || Blog</title>
+<% }else{ %>
+    <title>Tutorial || Blog</title>
+<% } %>
+<%- include('./partials/navbar') %> 
+
+<div class="container pt-5">
+    <h1 class="text-center mb-5"><%= post.title %> </h1>
+    <h5 class="mb-5 text-center"><%= post.desc %> </h5>
+    <% if (post.image) { %>
+        <div class="text-center">
+            <img src="<%= post.image %> " alt="Gambar" width="500px">
+        </div>
+    <% } %>
+    <div class="body-text mt-5">
+        <%- post.body %> 
+    </div>
+    <br>
+    <p>Author:
+        <a href="/author/<%= author.id %> "><%= author.name %> </a>
+    </p>
+    <a href="/update-post/<%= post.id %> " class="btn btn-primary mb-5">Update Post</a>
+    <a href="/delete-post/<%= post.id %> " class="btn btn-danger mb-5">Delete Post</a>
+</div>
+
+<%- include('./partials/footer') %> 

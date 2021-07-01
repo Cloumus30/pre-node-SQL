@@ -1,0 +1,58 @@
+<%- include('./partials/head') %>
+<% if (locals.title) { %>
+    <title><%= title %> || Blog</title>
+<% }else{ %>
+    <title>Tutorial || Blog</title>
+<% } %>
+<%- include('./partials/navbar') %> 
+
+<div class="container">
+    <% if(locals.title){ %> 
+        <h1 class="text-center"><%= title %> </h1>
+    <% }else{ %> 
+        <h1 class="text-center">Punjer Coding</h1>
+    <% } %> 
+    
+    <!-- Flash message -->
+    <% infoFlash.forEach(info => { %>
+        <div class="alert alert-success" role="alert">
+            <%= info %> 
+        </div>
+    <% }) %>
+    <% errFlash.forEach(err => { %>
+        <div class="alert alert-danger" role="alert">
+            <%= err %> 
+        </div>
+    <% }) %>
+
+    <% if (locals.author) { %>
+        <form action="/update-author" method="post">
+            <input type="text" hidden name="authorId" value="<%= author.id %> ">
+            <div class="mb-3">
+                <label for="author" class="form-label">Nama Author</label>
+                <input type="text" class="form-control" id="author" name="author" value="<%= author.name %> ">
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">username</label>
+                <input type="text" class="form-control" id="username" name="username" value="<%= author.username %> ">
+            </div>
+            
+            <button class="btn btn-success" type="submit">Submit</button>
+        </form>
+    <% } else { %>
+        <form action="/insert-author" method="post">
+            <div class="mb-3">
+                <label for="author" class="form-label">Nama Author</label>
+                <input type="text" class="form-control" id="author" name="author">
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">username</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+            
+            <button class="btn btn-success" type="submit">Submit</button>
+        </form>
+    <% } %> 
+</div>
+
+<%- include('./partials/footer') %>

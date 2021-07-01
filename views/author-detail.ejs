@@ -1,0 +1,37 @@
+<%- include('./partials/head') %> 
+<% if (locals.title) { %>
+    <title><%= title %> || Blog</title>
+<% }else{ %>
+    <title>Tutorial || Blog</title>
+<% } %>
+<%- include('./partials/navbar') %> 
+
+
+<div class="container pt-5">
+    <h1 class="text-center"><%= authorWithPost.name %> </h1>
+    <h5 class="text-center"><%= authorWithPost.username %> </h5>
+    
+        <div class="row justify-content-sm-center justify-content-md-start">
+            <% if (posts.length===0){ %> 
+                <div class="alert alert-primary" role="alert">
+                    Tidak Ada Pos
+                </div>
+            <% } %> 
+            <% posts.forEach(post => { %>
+            <div class="col-md-3 col-sm-12 pb-5">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center pb-2"> <%= post.title %></h5>
+                        <p class="card-text pb-2"><%= post.body %> </p>
+                        <a href="/post/<%= post.id %> " class="btn btn-primary">Read</a>
+                        <a href="/delete-post/<%= post.id %> " class="btn btn-danger">Delete</a>
+                        </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    
+    
+</div>
+
+<%- include('./partials/footer') %> 
